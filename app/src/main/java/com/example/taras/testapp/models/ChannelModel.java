@@ -16,7 +16,7 @@ import static com.example.taras.testapp.ApiConst.URL_KEY;
  * Created by Taras on 09/02/2017.
  */
 
-public class Channel {
+public class ChannelModel {
     private int id;
     private String name;
     private String url;
@@ -37,7 +37,7 @@ public class Channel {
         return contentValues;
     }
 
-    public Channel(Cursor cursor) {
+    public ChannelModel(Cursor cursor) {
         int idCol, nameCol, urlCol, picCol, catCol;
         idCol = cursor.getColumnIndex(ID_KEY);
         nameCol = cursor.getColumnIndex(ApiConst.NAME_KEY);
@@ -52,7 +52,7 @@ public class Channel {
         categoryId = cursor.getInt(catCol);
     }
 
-    public Channel() {
+    public ChannelModel() {
     }
 
     public int getId() {

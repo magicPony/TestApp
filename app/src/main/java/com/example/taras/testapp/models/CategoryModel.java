@@ -13,7 +13,7 @@ import static com.example.taras.testapp.ApiConst.TITLE_KEY;
  * Created by Taras on 09/02/2017.
  */
 
-public class Category {
+public class CategoryModel {
     private int id;
     private String title;
     @SerializedName("picture")
@@ -29,7 +29,7 @@ public class Category {
         return contentValues;
     }
 
-    public Category(Cursor cursor) {
+    public CategoryModel(Cursor cursor) {
         int idCol, titleCol, picCol;
         idCol = cursor.getColumnIndex(ID_KEY);
         titleCol = cursor.getColumnIndex(TITLE_KEY);

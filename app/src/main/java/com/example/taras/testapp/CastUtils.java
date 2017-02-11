@@ -2,8 +2,8 @@ package com.example.taras.testapp;
 
 import android.database.Cursor;
 
-import com.example.taras.testapp.models.Category;
-import com.example.taras.testapp.models.Channel;
+import com.example.taras.testapp.models.CategoryModel;
+import com.example.taras.testapp.models.ChannelModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -19,38 +19,38 @@ import java.util.ArrayList;
 
 public class CastUtils {
 
-    public static ArrayList<Channel> cursorToChannelList(Cursor cursor) {
-        ArrayList<Channel> res = new ArrayList<>();
+    public static ArrayList<ChannelModel> cursorToChannelList(Cursor cursor) {
+        ArrayList<ChannelModel> res = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
             do {
-                res.add(new Channel(cursor));
+                res.add(new ChannelModel(cursor));
             } while (cursor.moveToNext());
         }
 
         return  res;
     }
 
-    public static ArrayList<Category> cursorToCategoryList(Cursor cursor) {
-        ArrayList<Category> res = new ArrayList<>();
+    public static ArrayList<CategoryModel> cursorToCategoryList(Cursor cursor) {
+        ArrayList<CategoryModel> res = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
             do {
-                res.add(new Category(cursor));
+                res.add(new CategoryModel(cursor));
             } while (cursor.moveToNext());
         }
 
         return res;
     }
 
-    public static ArrayList<Channel> jsonToChannelLst(String json) {
+    public static ArrayList<ChannelModel> jsonToChannelLst(String json) {
         Gson gson = new Gson();
-        return gson.fromJson(json, new TypeToken<ArrayList<Channel>>(){}.getType());
+        return gson.fromJson(json, new TypeToken<ArrayList<ChannelModel>>(){}.getType());
     }
 
-    public static ArrayList<Category> jsonToCategoryList(String json) {
+    public static ArrayList<CategoryModel> jsonToCategoryList(String json) {
         Gson gson = new Gson();
-        return gson.fromJson(json, new TypeToken<ArrayList<Category>>(){}.getType());
+        return gson.fromJson(json, new TypeToken<ArrayList<CategoryModel>>(){}.getType());
     }
 
     public static String inputStreamToString(InputStream inputStream) throws IOException {
