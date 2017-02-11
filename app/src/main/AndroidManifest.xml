@@ -19,8 +19,8 @@
         </activity>
 
         <provider
-            android:authorities="authority"
-            android:name=".dataStoreApi.DataProvider"
+            android:authorities="my_authority"
+            android:name=".dataStoreApi.ContentProviderTV"
             android:enabled="true"
             android:exported="true"/>
 

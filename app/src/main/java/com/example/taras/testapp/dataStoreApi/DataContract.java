@@ -7,7 +7,7 @@ import android.net.Uri;
  */
 
 public class DataContract {
-    public static final String AUTHORITY = "taras.authority";
+    public static final String AUTHORITY = "my_authority";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
     public static final String PATH_CATEGORIES = "categories";
     public static final String PATH_CHANNELS = "channels";

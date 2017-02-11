@@ -13,7 +13,7 @@ import android.support.annotation.Nullable;
  * Created by Taras on 11/02/2017.
  */
 
-public class DataProvider extends ContentProvider {
+public class ContentProviderTV extends ContentProvider {
     private static final int CATEGORY = 1;
     private static final int CATEGORY_ID = 2;
     private static final int CHANNEL = 3;
