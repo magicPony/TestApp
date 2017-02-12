@@ -1,4 +1,4 @@
-package com.example.taras.testapp;
+package com.example.taras.testapp.serviceModules;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -9,10 +9,13 @@ import com.example.taras.testapp.dataStoreApi.CategoryEntry;
 import com.example.taras.testapp.dataStoreApi.ChannelEntry;
 import com.example.taras.testapp.models.CategoryModel;
 import com.example.taras.testapp.models.ChannelModel;
+import com.example.taras.testapp.models.ProgramItemModel;
 import com.example.taras.testapp.retrofitApi.modelResponse.CategoryRequestImpl;
 import com.example.taras.testapp.retrofitApi.modelResponse.ChannelRequestImpl;
 import com.example.taras.testapp.retrofitApi.modelResponse.ICategoryRequest;
 import com.example.taras.testapp.retrofitApi.modelResponse.IChannelRequest;
+import com.example.taras.testapp.retrofitApi.modelResponse.IProgramRequest;
+import com.example.taras.testapp.retrofitApi.modelResponse.ProgramRequestImpl;
 
 import java.util.List;
 
@@ -26,6 +29,8 @@ import static com.example.taras.testapp.ApiConst.COMMAND_NO_ACTION;
 import static com.example.taras.testapp.ApiConst.COMMAND_RESET_ALARM_KEY;
 import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_CATEGORIES;
 import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_CHANNELS;
+import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_PROGRAM;
+import static com.example.taras.testapp.ApiConst.DATE_KEY;
 
 /**
  * Created by Taras on 11/02/2017.
@@ -56,6 +61,7 @@ public class DataHandleService extends IntentService {
         Log.d("SERVICE_DEBUG", "hooray!!!");
         int command = intent.getIntExtra(COMMAND_KEY, COMMAND_NO_ACTION);
         //updateCategories(); // only debug string
+        updateProgram("29022017"); // only debug string
 
         switch (command) {
             case COMMAND_RESET_ALARM_KEY :
@@ -73,7 +79,39 @@ public class DataHandleService extends IntentService {
             case COMMAND_UPDATE_CHANNELS :
                 updateChannels();
                 break;
+
+            case COMMAND_UPDATE_PROGRAM :
+                String date = "29022017";
+
+                if (intent.hasExtra(DATE_KEY)) {
+                    intent.getStringExtra(DATE_KEY);
+                }
+
+                updateProgram(date);
+                break;
         }
+    }
+
+    private void updateProgram(String date) {
+        IProgramRequest programRequest = new ProgramRequestImpl();
+        Call<List<ProgramItemModel>> requestRes = programRequest.getProgramList(date);
+
+        requestRes.enqueue(new Callback<List<ProgramItemModel>>() {
+            @Override
+            public void onResponse(Call<List<ProgramItemModel>> call, Response<List<ProgramItemModel>> response) {
+                for (ProgramItemModel programItem : response.body()) {
+                    // TODO : delete from db
+
+                    Log.d("update_data", "channel_id=" + programItem.getChannelId() + " title=" + programItem.getTitle());
+                    // TODO : insert to db
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ProgramItemModel>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void updateChannels() {

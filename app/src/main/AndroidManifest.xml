@@ -28,10 +28,10 @@
             android:syncable="true"
             android:exported="true"/>
 
-        <receiver android:name=".SyncScheduler"
+        <receiver android:name=".serviceModules.SyncScheduler"
             android:process=":remote"/>
 
-        <service android:name=".DataHandleService"
+        <service android:name=".serviceModules.DataHandleService"
             android:exported="false"/>
 
     </application>

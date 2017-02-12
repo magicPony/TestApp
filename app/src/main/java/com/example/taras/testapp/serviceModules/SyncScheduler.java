@@ -1,4 +1,4 @@
-package com.example.taras.testapp;
+package com.example.taras.testapp.serviceModules;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

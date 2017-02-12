@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.example.taras.testapp.DataHandleService;
+import com.example.taras.testapp.serviceModules.DataHandleService;
 import com.example.taras.testapp.R;
-import com.example.taras.testapp.SyncScheduler;
+import com.example.taras.testapp.serviceModules.SyncScheduler;
 import com.example.taras.testapp.dataStoreApi.CategoryEntry;
 import com.example.taras.testapp.models.CategoryModel;
 import com.example.taras.testapp.retrofitApi.modelResponse.CategoryRequestImpl;
@@ -22,7 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.taras.testapp.ApiConst.COMMAND_KEY;
-import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_CHANNELS;
+import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_PROGRAM;
 import static com.example.taras.testapp.CastUtils.cursorToCategoryList;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void tryRetrofitAndService() {
         Intent intent = new Intent(this, DataHandleService.class);
-        intent.putExtra(COMMAND_KEY, COMMAND_UPDATE_CHANNELS);
+        intent.putExtra(COMMAND_KEY, COMMAND_UPDATE_PROGRAM);
         startService(intent);
     }
 

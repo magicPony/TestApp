@@ -7,12 +7,18 @@ import android.net.Uri;
  */
 
 public class ApiConst {
+    // parse keys
     public static final String ID_KEY = "id";
     public static final String NAME_KEY = "name";
     public static final String URL_KEY = "url";
     public static final String PICTURE_URL_KEY = "picture";
     public static final String CATEGORY_ID_KEY = "category";
     public static final String TITLE_KEY = "title";
+    public static final String DATE_KEY = "date";
+    public static final String TIME_KEY = "time";
+    public static final String DESCRIPTION_KEY = "description";
+    public static final String CHANNEL_ID_KEY = "channel_id";
+
     public static final String CATEGORY_CLASS = "category";
     public static final String CHANNEL_CLASS = "channel";
     public static final String AUTHORITY = "my_authority";
@@ -32,5 +38,6 @@ public class ApiConst {
     public static final int COMMAND_NO_ACTION = 103;
     public static final int COMMAND_UPDATE_CATEGORIES = 104;
     public static final int COMMAND_UPDATE_CHANNELS = 105;
+    public static final int COMMAND_UPDATE_PROGRAM = 106;
     public static final String COMMAND_KEY = "command";
 }
