@@ -30,5 +30,7 @@ public class ApiConst {
     public static final int COMMAND_RESET_ALARM_KEY = 102;
     public static final int COMMAND_CANCEL_ALARM = 101;
     public static final int COMMAND_NO_ACTION = 103;
+    public static final int COMMAND_UPDATE_CATEGORIES = 104;
+    public static final int COMMAND_UPDATE_CHANNELS = 105;
     public static final String COMMAND_KEY = "command";
 }

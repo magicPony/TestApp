@@ -21,6 +21,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.taras.testapp.ApiConst.COMMAND_KEY;
+import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_CHANNELS;
 import static com.example.taras.testapp.CastUtils.cursorToCategoryList;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,8 +33,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //tryScheduler();
         //tryDatabaseIO();
-        tryService();
         //cancelAlarm();
+        //tryService();
+        tryRetrofitAndService();
+    }
+
+    private void tryRetrofitAndService() {
+        Intent intent = new Intent(this, DataHandleService.class);
+        intent.putExtra(COMMAND_KEY, COMMAND_UPDATE_CHANNELS);
+        startService(intent);
     }
 
     private void cancelAlarm() {
