@@ -34,8 +34,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private void addProgramsTable(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE " + ProgramsEntry.TABLE_NAME + " (" +
+                ProgramsEntry._ID + " integer primary key autoincrement, " +
                 TIMESTAMP_KEY + " text, " +
-                JSON_PROGRAM_KEY + "text);"
+                JSON_PROGRAM_KEY + " text);"
         );
     }
 

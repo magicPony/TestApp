@@ -3,9 +3,10 @@ package com.example.taras.testapp.models;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import static com.example.taras.testapp.ApiConst.CHANNEL_ID_KEY;
 import static com.example.taras.testapp.ApiConst.DATE_KEY;
@@ -96,9 +97,15 @@ public class ProgramItemModel {
         this.time = time;
     }
 
-    public JsonObject toJson() {
-        Gson gson = new Gson();
-        // TODO
-        return null;
+    public JSONObject toJson() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put(CHANNEL_ID_KEY, channelId);
+        jsonObject.put(TITLE_KEY, title);
+        jsonObject.put(DATE_KEY, date);
+        jsonObject.put(DESCRIPTION_KEY, description);
+        jsonObject.put(TIME_KEY, time);
+
+        return jsonObject;
     }
 }
