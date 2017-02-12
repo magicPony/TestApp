@@ -7,6 +7,11 @@ import android.util.Log;
 
 import com.example.taras.testapp.dataStoreApi.DBHelper;
 
+import static com.example.taras.testapp.ApiConst.COMMAND_CANCEL_ALARM;
+import static com.example.taras.testapp.ApiConst.COMMAND_KEY;
+import static com.example.taras.testapp.ApiConst.COMMAND_NO_ACTION;
+import static com.example.taras.testapp.ApiConst.COMMAND_RESET_ALARM_KEY;
+
 /**
  * Created by Taras on 11/02/2017.
  */
@@ -23,13 +28,41 @@ public class DataHandleService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        mDBHelper = new DBHelper(getApplication());
+        mContext = getApplication();
+        mDBHelper = new DBHelper(mContext);
+        resetAlarm();
+    }
+
+    private void resetAlarm() {
+        cancelAlarm();
+        startAlarm();
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         // TODO
         Log.d("SERVICE_DEBUG", "hooray!!!");
+        int command = intent.getIntExtra(COMMAND_KEY, COMMAND_NO_ACTION);
+
+        switch (command) {
+            case COMMAND_RESET_ALARM_KEY :
+                resetAlarm();
+                break;
+
+            case COMMAND_CANCEL_ALARM :
+                cancelAlarm();
+                break;
+        }
+    }
+
+    private void startAlarm() {
+        SyncScheduler scheduler = new SyncScheduler();
+        scheduler.setAlarm(mContext);
+    }
+
+    private void cancelAlarm() {
+        SyncScheduler scheduler = new SyncScheduler();
+        scheduler.cancelAlarm(mContext);
     }
 
     /*public ArrayList<CategoryModel> getCategories() {

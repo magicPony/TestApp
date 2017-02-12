@@ -1,10 +1,12 @@
 package com.example.taras.testapp.uI;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.taras.testapp.DataHandleService;
 import com.example.taras.testapp.R;
 import com.example.taras.testapp.SyncScheduler;
 import com.example.taras.testapp.dataStoreApi.CategoryEntry;
@@ -27,8 +29,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tryScheduler();
+        //tryScheduler();
         //tryDatabaseIO();
+        tryService();
+        //cancelAlarm();
+    }
+
+    private void cancelAlarm() {
+        SyncScheduler scheduler = new SyncScheduler();
+        scheduler.cancelAlarm(this);
+    }
+
+    private void tryService() {
+        Intent intent = new Intent(this, DataHandleService.class);
+        startService(intent);
     }
 
     private void tryScheduler() {

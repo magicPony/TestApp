@@ -25,4 +25,10 @@ public class ApiConst {
 
     public static final Uri CATEGORIES_URI = Uri.parse("content://" + AUTHORITY + "/" + CATEGORIES_PATH);
     public static final Uri CHANNELS_URI   = Uri.parse("content://" + AUTHORITY + "/" + CHANNELS_PATH);
+
+    // service constants
+    public static final int COMMAND_RESET_ALARM_KEY = 102;
+    public static final int COMMAND_CANCEL_ALARM = 101;
+    public static final int COMMAND_NO_ACTION = 103;
+    public static final String COMMAND_KEY = "command";
 }
