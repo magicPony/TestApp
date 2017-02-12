@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.taras.testapp.dataStoreApi.CategoryEntry;
 import com.example.taras.testapp.dataStoreApi.ChannelEntry;
+import com.example.taras.testapp.dataStoreApi.ProgramsEntry;
 import com.example.taras.testapp.models.CategoryModel;
 import com.example.taras.testapp.models.ChannelModel;
 import com.example.taras.testapp.models.ProgramItemModel;
@@ -61,7 +62,7 @@ public class DataHandleService extends IntentService {
         Log.d("SERVICE_DEBUG", "hooray!!!");
         int command = intent.getIntExtra(COMMAND_KEY, COMMAND_NO_ACTION);
         //updateCategories(); // only debug string
-        updateProgram("29022017"); // only debug string
+        //updateProgram("29022017"); // only debug string
 
         switch (command) {
             case COMMAND_RESET_ALARM_KEY :
@@ -99,11 +100,11 @@ public class DataHandleService extends IntentService {
         requestRes.enqueue(new Callback<List<ProgramItemModel>>() {
             @Override
             public void onResponse(Call<List<ProgramItemModel>> call, Response<List<ProgramItemModel>> response) {
-                for (ProgramItemModel programItem : response.body()) {
-                    // TODO : delete from db
+                getContentResolver().delete(ProgramsEntry.CONTENT_URI, null, null);
 
+                for (ProgramItemModel programItem : response.body()) {
+                    getContentResolver().insert(ProgramsEntry.CONTENT_URI, programItem.toContentValues());
                     Log.d("update_data", "channel_id=" + programItem.getChannelId() + " title=" + programItem.getTitle());
-                    // TODO : insert to db
                 }
             }
 

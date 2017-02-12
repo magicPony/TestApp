@@ -18,6 +18,8 @@ public class ContentProviderTV extends ContentProvider {
     private static final int CATEGORY_ID = 2;
     private static final int CHANNEL = 3;
     private static final int CHANNEL_ID = 4;
+    private static final int PROGRAM = 5;
+    private static final int PROGRAM_ID = 6;
 
     private static final UriMatcher mUriMatcher = buildUriMatcher();
     private DBHelper mDBHelper;
@@ -30,6 +32,8 @@ public class ContentProviderTV extends ContentProvider {
         matcher.addURI(content, DataContract.PATH_CATEGORIES + "/#", CATEGORY_ID);
         matcher.addURI(content, DataContract.PATH_CHANNELS, CHANNEL);
         matcher.addURI(content, DataContract.PATH_CHANNELS + "/#", CHANNEL_ID);
+        matcher.addURI(content, DataContract.PATH_PROGRAMS, PROGRAM);
+        matcher.addURI(content, DataContract.PATH_PROGRAMS + "/#", PROGRAM_ID);
 
         return matcher;
     }
@@ -49,6 +53,12 @@ public class ContentProviderTV extends ContentProvider {
 
             case CHANNEL_ID :
                 return CategoryEntry.CONTENT_ITEM_TYPE;
+
+            case PROGRAM :
+                return ProgramsEntry.CONTENT_TYPE;
+
+            case PROGRAM_ID :
+                return ProgramsEntry.CONTENT_ITEM_TYPE;
 
             default :
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -119,6 +129,30 @@ public class ContentProviderTV extends ContentProvider {
                 );
                 break;
 
+            case PROGRAM :
+                cursor = db.query(ProgramsEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+
+            case PROGRAM_ID :
+                _id = ContentUris.parseId(uri);
+                cursor = db.query(
+                        ProgramsEntry.TABLE_NAME,
+                        projection,
+                        ProgramsEntry._ID + " = ?",
+                        new String[]{String.valueOf(_id)},
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+
             default :
                 throw new UnsupportedOperationException("Unknown uro: " + uri);
         }
@@ -156,6 +190,15 @@ public class ContentProviderTV extends ContentProvider {
                 }
 
                 break;
+
+            case PROGRAM :
+                _id = db.insert(ProgramsEntry.TABLE_NAME, null, contentValues);
+
+                if (_id > 0) {
+                    resultUri = ProgramsEntry.buildProgramsUri(_id);
+                }
+
+                break;
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
@@ -174,6 +217,10 @@ public class ContentProviderTV extends ContentProvider {
 
             case CHANNEL :
                 rows = db.delete(ChannelEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+
+            case PROGRAM :
+                rows = db.delete(ProgramsEntry.TABLE_NAME, selection, selectionArgs);
                 break;
         }
 
@@ -196,6 +243,10 @@ public class ContentProviderTV extends ContentProvider {
 
             case CHANNEL :
                 rows = db.update(ChannelEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+                break;
+
+            case PROGRAM :
+                db.update(ProgramsEntry.TABLE_NAME, contentValues, selection, selectionArgs);
                 break;
         }
 

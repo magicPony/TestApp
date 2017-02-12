@@ -18,6 +18,8 @@ public class ApiConst {
     public static final String TIME_KEY = "time";
     public static final String DESCRIPTION_KEY = "description";
     public static final String CHANNEL_ID_KEY = "channel_id";
+    public static final String TIMESTAMP_KEY = "timestamp";
+    public static final String JSON_PROGRAM_KEY = "json_program";
 
     public static final String CATEGORY_CLASS = "category";
     public static final String CHANNEL_CLASS = "channel";

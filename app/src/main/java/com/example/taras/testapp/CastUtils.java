@@ -4,14 +4,18 @@ import android.database.Cursor;
 
 import com.example.taras.testapp.models.CategoryModel;
 import com.example.taras.testapp.models.ChannelModel;
+import com.example.taras.testapp.models.ProgramItemModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Taras on 09/02/2017.
@@ -63,5 +67,10 @@ public class CastUtils {
         }
 
         return builder.toString();
+    }
+
+    public static JSONObject programListToJson(List<ProgramItemModel> programs) {
+        // TODO
+        return null;
     }
 }

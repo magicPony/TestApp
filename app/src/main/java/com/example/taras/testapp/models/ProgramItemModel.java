@@ -3,6 +3,8 @@ package com.example.taras.testapp.models;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import static com.example.taras.testapp.ApiConst.CHANNEL_ID_KEY;
@@ -92,5 +94,11 @@ public class ProgramItemModel {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public JsonObject toJson() {
+        Gson gson = new Gson();
+        // TODO
+        return null;
     }
 }

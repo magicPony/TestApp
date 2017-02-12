@@ -6,8 +6,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import static com.example.taras.testapp.ApiConst.CATEGORY_ID_KEY;
 import static com.example.taras.testapp.ApiConst.ID_KEY;
+import static com.example.taras.testapp.ApiConst.JSON_PROGRAM_KEY;
 import static com.example.taras.testapp.ApiConst.NAME_KEY;
 import static com.example.taras.testapp.ApiConst.PICTURE_URL_KEY;
+import static com.example.taras.testapp.ApiConst.TIMESTAMP_KEY;
 import static com.example.taras.testapp.ApiConst.TITLE_KEY;
 import static com.example.taras.testapp.ApiConst.URL_KEY;
 
@@ -27,6 +29,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         addCategoryTable(sqLiteDatabase);
         addChannelTable(sqLiteDatabase);
+        addProgramsTable(sqLiteDatabase);
+    }
+
+    private void addProgramsTable(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("CREATE TABLE " + ProgramsEntry.TABLE_NAME + " (" +
+                TIMESTAMP_KEY + " text, " +
+                JSON_PROGRAM_KEY + "text);"
+        );
     }
 
     private void addChannelTable(SQLiteDatabase sqLiteDatabase) {
