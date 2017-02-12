@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.taras.testapp.R;
+import com.example.taras.testapp.SyncScheduler;
 import com.example.taras.testapp.dataStoreApi.CategoryEntry;
 import com.example.taras.testapp.models.CategoryModel;
 import com.example.taras.testapp.retrofitApi.modelResponse.CategoryRequestImpl;
@@ -26,7 +27,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //***********************************
+        tryScheduler();
+        //tryDatabaseIO();
+    }
+
+    private void tryScheduler() {
+        SyncScheduler scheduler = new SyncScheduler();
+        scheduler.setAlarm(this);
+    }
+
+    private void tryDatabaseIO() {
         ICategoryRequest categoryRequest = new CategoryRequestImpl();
         Call<List<CategoryModel>> requestRes = categoryRequest.getCategoryList();
 
