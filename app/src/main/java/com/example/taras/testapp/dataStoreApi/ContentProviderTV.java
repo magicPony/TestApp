@@ -5,9 +5,11 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * Created by Taras on 11/02/2017.
@@ -203,6 +205,46 @@ public class ContentProviderTV extends ContentProvider {
 
         getContext().getContentResolver().notifyChange(uri, null);
         return resultUri;
+    }
+
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        SQLiteDatabase db = mDBHelper.getWritableDatabase();
+        String tableName = "";
+
+        switch (mUriMatcher.match(uri)) {
+            case PROGRAM :
+                tableName = ProgramsEntry.TABLE_NAME;
+                break;
+
+            case CHANNEL :
+                tableName = ChannelEntry.TABLE_NAME;
+                break;
+
+            case CATEGORY :
+                tableName = CategoryEntry.TABLE_NAME;
+                break;
+        }
+
+        if (tableName.equals("")) {
+            Log.d("bulkInsert", "wrong uri " + uri);
+            return 0;
+        }
+
+        db.beginTransaction();
+
+        for (ContentValues singleItem : values) {
+            long id = db.insertOrThrow(ProgramsEntry.TABLE_NAME, null, singleItem);
+
+            if (id <= 0) {
+                throw new SQLException("Failed to insert row into " + uri);
+            }
+        }
+
+        db.setTransactionSuccessful();
+        getContext().getContentResolver().notifyChange(uri, null);
+        db.endTransaction();
+        return values.length;
     }
 
     @Override

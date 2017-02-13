@@ -3,16 +3,18 @@ package com.example.taras.testapp.uI;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.example.taras.testapp.serviceModules.DataHandleService;
 import com.example.taras.testapp.R;
-import com.example.taras.testapp.serviceModules.SyncScheduler;
 import com.example.taras.testapp.dataStoreApi.CategoryEntry;
 import com.example.taras.testapp.models.CategoryModel;
 import com.example.taras.testapp.retrofitApi.modelResponse.CategoryRequestImpl;
 import com.example.taras.testapp.retrofitApi.modelResponse.ICategoryRequest;
+import com.example.taras.testapp.serviceModules.DataHandleService;
+import com.example.taras.testapp.serviceModules.SyncScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +24,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.taras.testapp.ApiConst.COMMAND_KEY;
+import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_CATEGORIES;
+import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_CHANNELS;
 import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_PROGRAM;
-import static com.example.taras.testapp.CastUtils.cursorToCategoryList;
+import static com.example.taras.testapp.UtilsApi.cursorToCategoryList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +35,42 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tryRetrofitAndService();
+        //tryRetrofitAndService();
+
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
+                MainActivity.this));
+
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+        updateNecessaryData(); // TODO : replace this method
+    }
+
+    private void updateNecessaryData() {
+        updateProgram();
+        updateCategories();
+        updateChannels();
+    }
+
+    private void updateChannels() {
+        Intent intent = new Intent(this, DataHandleService.class);
+        intent.putExtra(COMMAND_KEY, COMMAND_UPDATE_CHANNELS);
+        startService(intent);
+    }
+
+    private void updateCategories() {
+        Intent intent = new Intent(this, DataHandleService.class);
+        intent.putExtra(COMMAND_KEY, COMMAND_UPDATE_CATEGORIES);
+        startService(intent);
+    }
+
+    private void updateProgram() {
+        Intent intent = new Intent(this, DataHandleService.class);
+        intent.putExtra(COMMAND_KEY, COMMAND_UPDATE_CATEGORIES);
+        startService(intent);
     }
 
     private void tryRetrofitAndService() {

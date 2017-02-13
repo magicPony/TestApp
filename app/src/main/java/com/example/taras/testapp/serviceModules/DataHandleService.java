@@ -5,10 +5,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
-import android.text.format.Time;
 import android.util.Log;
 
+import com.example.taras.testapp.PrefsApi;
 import com.example.taras.testapp.dataStoreApi.CategoryEntry;
 import com.example.taras.testapp.dataStoreApi.ChannelEntry;
 import com.example.taras.testapp.dataStoreApi.ProgramsEntry;
@@ -39,9 +38,10 @@ import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_CATEGORIES;
 import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_CHANNELS;
 import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_PROGRAM;
 import static com.example.taras.testapp.ApiConst.DATE_KEY;
+import static com.example.taras.testapp.ApiConst.DAYS_TO_LOAD;
 import static com.example.taras.testapp.ApiConst.JSON_PROGRAM_KEY;
 import static com.example.taras.testapp.ApiConst.TIMESTAMP_KEY;
-import static com.example.taras.testapp.CastUtils.intToString;
+import static com.example.taras.testapp.UtilsApi.getDate;
 
 /**
  * Created by Taras on 11/02/2017.
@@ -70,9 +70,16 @@ public class DataHandleService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.d("SERVICE_DEBUG", "hooray!!!");
+
         if (!intent.hasExtra(COMMAND_KEY)) {
-            intent.putExtra(COMMAND_KEY, COMMAND_UPDATE_PROGRAM);
-            intent.putExtra(DATE_KEY, getCurrentDate());
+            Log.d("update_data", "alarm intent sent");
+            updateCategories();
+            updateChannels();
+            int daysCount = PrefsApi.getInt(mContext, DAYS_TO_LOAD, 1);
+
+            for (int i = 0; i < daysCount; i++) {
+                updateProgram(getDate(i));
+            }
         }
 
         int command = intent.getIntExtra(COMMAND_KEY, COMMAND_NO_ACTION);
@@ -107,13 +114,13 @@ public class DataHandleService extends IntentService {
     }
 
     private void updateProgram(final String date) {
+        Log.d("update_data", "updateProgram");
         IProgramRequest programRequest = new ProgramRequestImpl();
         Call<List<ProgramItemModel>> requestRes = programRequest.getProgramList(date);
 
         requestRes.enqueue(new Callback<List<ProgramItemModel>>() {
             @Override
             public void onResponse(Call<List<ProgramItemModel>> call, Response<List<ProgramItemModel>> response) {
-                Log.d("update_data", "onResponse");
                 Cursor cursor = getContentResolver().query(ProgramsEntry.CONTENT_URI, null, null, null, null);
 
                 if (cursor.moveToFirst()) {
@@ -121,7 +128,6 @@ public class DataHandleService extends IntentService {
 
                     do {
                         if (date.equals(cursor.getString(timestampCol))) {
-                            Log.d("update_data", "added");
                             return;
                         }
                     } while (cursor.moveToNext());
@@ -139,8 +145,8 @@ public class DataHandleService extends IntentService {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(JSON_PROGRAM_KEY, jsonArray.toString());
                 contentValues.put(TIMESTAMP_KEY, date);
-                Uri addedCount = getContentResolver().insert(ProgramsEntry.CONTENT_URI, contentValues);
-                Log.d("update_data", addedCount.toString());
+                getContentResolver().insert(ProgramsEntry.CONTENT_URI, contentValues);
+                Log.d("update_data", "program updated");
             }
 
             @Override
@@ -151,6 +157,7 @@ public class DataHandleService extends IntentService {
     }
 
     private void updateChannels() {
+        Log.d("update_data", "updateChannels");
         IChannelRequest channelRequest = new ChannelRequestImpl();
         Call<List<ChannelModel>> requestRes = channelRequest.getCategoryList();
 
@@ -161,9 +168,10 @@ public class DataHandleService extends IntentService {
                     getContentResolver().delete(ChannelEntry.CONTENT_URI, null, null);
 
                     for (ChannelModel channel : response.body()) {
-                        Log.d("update_data", "id=" + channel.getId() + " name=" + channel.getName());
                         getContentResolver().insert(ChannelEntry.CONTENT_URI, channel.toContentValues());
                     }
+
+                    Log.d("update_data", "channels updated");
                 }
             }
 
@@ -185,6 +193,7 @@ public class DataHandleService extends IntentService {
     }
 
     private void updateCategories() {
+        Log.d("update_data", "updateCategories");
         ICategoryRequest categoryRequest = new CategoryRequestImpl();
         Call<List<CategoryModel>> requestRes = categoryRequest.getCategoryList();
 
@@ -195,11 +204,10 @@ public class DataHandleService extends IntentService {
                     getContentResolver().delete(CategoryEntry.CONTENT_URI, null, null);
 
                     for (CategoryModel category : response.body()) {
-                        Log.d("update_data", "id=" + category.getId() + " title=" + category.getTitle());
                         getContentResolver().insert(CategoryEntry.CONTENT_URI, category.toContentValues());
                     }
 
-                    Log.d("update_date", "data updated");
+                    Log.d("update_data", "categories updated");
                 }
             }
 
@@ -210,14 +218,4 @@ public class DataHandleService extends IntentService {
         });
     }
 
-    public String getCurrentDate() {
-        Time today = new Time(Time.getCurrentTimezone());
-        today.setToNow();
-        int day, month, year;
-        day = today.monthDay;
-        month = today.month + 1;
-        year = today.year;
-        Log.d("current_date", intToString(day, 2) + intToString(month, 2) + intToString(year, 4));
-        return intToString(day, 2) + intToString(month, 2) + intToString(year, 4);
-    }
 }

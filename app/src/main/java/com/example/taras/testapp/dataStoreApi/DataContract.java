@@ -12,4 +12,5 @@ public class DataContract {
     public static final String PATH_CATEGORIES = "categories";
     public static final String PATH_CHANNELS = "channels";
     public static final String PATH_PROGRAMS = "programs";
+    public static final String PATH_FAVES = "faves";
 }

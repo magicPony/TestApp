@@ -1,6 +1,8 @@
 package com.example.taras.testapp;
 
 import android.database.Cursor;
+import android.text.format.Time;
+import android.util.Log;
 
 import com.example.taras.testapp.models.CategoryModel;
 import com.example.taras.testapp.models.ChannelModel;
@@ -17,7 +19,19 @@ import java.util.ArrayList;
  * Created by Taras on 09/02/2017.
  */
 
-public class CastUtils {
+public class UtilsApi {
+
+    public static String getDate(int daysToAdd) {
+        //      :|
+        Time today = new Time(Time.getCurrentTimezone());
+        today.setToNow();
+        int day, month, year;
+        day = today.monthDay;
+        month = today.month + 1 + daysToAdd;
+        year = today.year;
+        Log.d("current_date", intToString(day, 2) + intToString(month, 2) + intToString(year, 4));
+        return intToString(day, 2) + intToString(month, 2) + intToString(year, 4);
+    }
 
     public static ArrayList<ChannelModel> cursorToChannelList(Cursor cursor) {
         ArrayList<ChannelModel> res = new ArrayList<>();

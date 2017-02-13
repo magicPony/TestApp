@@ -20,6 +20,7 @@ public class ApiConst {
     public static final String CHANNEL_ID_KEY = "channel_id";
     public static final String TIMESTAMP_KEY = "timestamp";
     public static final String JSON_PROGRAM_KEY = "json_program";
+    public static final String DAYS_TO_LOAD = "days_to_load";
 
     public static final String CATEGORY_CLASS = "category";
     public static final String CHANNEL_CLASS = "channel";

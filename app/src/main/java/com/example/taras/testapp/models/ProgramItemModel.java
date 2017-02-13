@@ -108,4 +108,8 @@ public class ProgramItemModel {
 
         return jsonObject;
     }
+
+    public int compareTo(ProgramItemModel programItem) {
+        return time.compareTo(programItem.getTime());
+    }
 }
