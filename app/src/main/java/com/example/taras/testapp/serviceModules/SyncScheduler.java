@@ -30,7 +30,7 @@ public class SyncScheduler extends BroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, SyncScheduler.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 20, pendingIntent); // TODO : increase time interval
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 30, pendingIntent); // TODO : increase time interval
     }
 
     public void cancelAlarm(Context context) {

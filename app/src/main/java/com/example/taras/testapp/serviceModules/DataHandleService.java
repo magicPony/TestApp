@@ -4,13 +4,14 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.util.Log;
 
 import com.example.taras.testapp.PrefsApi;
+import com.example.taras.testapp.UtilsApi;
 import com.example.taras.testapp.dataStoreApi.CategoryEntry;
 import com.example.taras.testapp.dataStoreApi.ChannelEntry;
 import com.example.taras.testapp.dataStoreApi.ProgramsEntry;
+import com.example.taras.testapp.dataStoreApi.TmpDataController;
 import com.example.taras.testapp.models.CategoryModel;
 import com.example.taras.testapp.models.ChannelModel;
 import com.example.taras.testapp.models.ProgramItemModel;
@@ -30,18 +31,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.taras.testapp.ApiConst.COMMAND_CANCEL_ALARM;
-import static com.example.taras.testapp.ApiConst.COMMAND_KEY;
-import static com.example.taras.testapp.ApiConst.COMMAND_NO_ACTION;
-import static com.example.taras.testapp.ApiConst.COMMAND_RESET_ALARM_KEY;
-import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_CATEGORIES;
-import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_CHANNELS;
-import static com.example.taras.testapp.ApiConst.COMMAND_UPDATE_PROGRAM;
-import static com.example.taras.testapp.ApiConst.DATE_KEY;
-import static com.example.taras.testapp.ApiConst.DAYS_TO_LOAD;
+import static com.example.taras.testapp.ApiConst.DAYS_TO_LOAD_KEY;
 import static com.example.taras.testapp.ApiConst.JSON_PROGRAM_KEY;
 import static com.example.taras.testapp.ApiConst.TIMESTAMP_KEY;
-import static com.example.taras.testapp.UtilsApi.getDate;
 
 /**
  * Created by Taras on 11/02/2017.
@@ -69,51 +61,16 @@ public class DataHandleService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d("SERVICE_DEBUG", "hooray!!!");
+        updateCategories();
+        updateChannels();
+        int daysCount = PrefsApi.getInt(mContext, DAYS_TO_LOAD_KEY, 1);
 
-        if (!intent.hasExtra(COMMAND_KEY)) {
-            Log.d("update_data", "alarm intent sent");
-            updateCategories();
-            updateChannels();
-            int daysCount = PrefsApi.getInt(mContext, DAYS_TO_LOAD, 1);
-
-            for (int i = 0; i < daysCount; i++) {
-                updateProgram(getDate(i));
-            }
-        }
-
-        int command = intent.getIntExtra(COMMAND_KEY, COMMAND_NO_ACTION);
-
-        switch (command) {
-            case COMMAND_RESET_ALARM_KEY :
-                resetAlarm();
-                break;
-
-            case COMMAND_CANCEL_ALARM :
-                cancelAlarm();
-                break;
-
-            case COMMAND_UPDATE_CATEGORIES :
-                updateCategories();
-                break;
-
-            case COMMAND_UPDATE_CHANNELS :
-                updateChannels();
-                break;
-
-            case COMMAND_UPDATE_PROGRAM :
-                String date = "29022017";
-
-                if (intent.hasExtra(DATE_KEY)) {
-                    intent.getStringExtra(DATE_KEY);
-                }
-
-                updateProgram(date);
-                break;
+        for (int i = 0; i < daysCount; i++) {
+            updateProgram(UtilsApi.getDate(i), i == daysCount - 1);
         }
     }
 
-    private void updateProgram(final String date) {
+    private void updateProgram(final String date, final boolean sendNotification) {
         Log.d("update_data", "updateProgram");
         IProgramRequest programRequest = new ProgramRequestImpl();
         Call<List<ProgramItemModel>> requestRes = programRequest.getProgramList(date);
@@ -121,16 +78,10 @@ public class DataHandleService extends IntentService {
         requestRes.enqueue(new Callback<List<ProgramItemModel>>() {
             @Override
             public void onResponse(Call<List<ProgramItemModel>> call, Response<List<ProgramItemModel>> response) {
-                Cursor cursor = getContentResolver().query(ProgramsEntry.CONTENT_URI, null, null, null, null);
+                TmpDataController.updateProgram(response.body(), date);
 
-                if (cursor.moveToFirst()) {
-                    int timestampCol = cursor.getColumnIndex(TIMESTAMP_KEY);
-
-                    do {
-                        if (date.equals(cursor.getString(timestampCol))) {
-                            return;
-                        }
-                    } while (cursor.moveToNext());
+                if (sendNotification) {
+                    TmpDataController.notifyProgramLoaded();
                 }
 
                 JSONArray jsonArray = new JSONArray();
@@ -165,6 +116,8 @@ public class DataHandleService extends IntentService {
             @Override
             public void onResponse(Call<List<ChannelModel>> call, Response<List<ChannelModel>> response) {
                 if (response.code() == 200 && response.body() != null) {
+                    TmpDataController.updateChannels(response.body());
+                    TmpDataController.notifyChannelsLoaded();
                     getContentResolver().delete(ChannelEntry.CONTENT_URI, null, null);
 
                     for (ChannelModel channel : response.body()) {
@@ -201,6 +154,8 @@ public class DataHandleService extends IntentService {
             @Override
             public void onResponse(Call<List<CategoryModel>> call, Response<List<CategoryModel>> response) {
                 if (response.code() == 200 && response.body() != null) {
+                    TmpDataController.updateCategories(response.body());
+                    TmpDataController.notifyCategoriesLoaded();
                     getContentResolver().delete(CategoryEntry.CONTENT_URI, null, null);
 
                     for (CategoryModel category : response.body()) {

@@ -11,6 +11,9 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import static com.example.taras.testapp.ApiConst.TIMESTAMP_KEY;
+import static com.example.taras.testapp.UtilsApi.parseDate;
+
 /**
  * Created by Taras on 11/02/2017.
  */
@@ -143,12 +146,14 @@ public class ContentProviderTV extends ContentProvider {
                 break;
 
             case PROGRAM_ID :
-                _id = ContentUris.parseId(uri);
+                //_id = ContentUris.parseId(uri);
+                String date = parseDate(uri);
                 cursor = db.query(
                         ProgramsEntry.TABLE_NAME,
                         projection,
-                        ProgramsEntry._ID + " = ?",
-                        new String[]{String.valueOf(_id)},
+                        //ProgramsEntry._ID + " = ?",   TODO : check right string
+                        TIMESTAMP_KEY + " = ?",
+                        new String[]{date},
                         null,
                         null,
                         sortOrder

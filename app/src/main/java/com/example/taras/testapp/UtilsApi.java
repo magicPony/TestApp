@@ -1,19 +1,21 @@
 package com.example.taras.testapp;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.text.format.Time;
 import android.util.Log;
 
 import com.example.taras.testapp.models.CategoryModel;
 import com.example.taras.testapp.models.ChannelModel;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.example.taras.testapp.models.ProgramItemModel;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+
+import static com.example.taras.testapp.ApiConst.JSON_PROGRAM_KEY;
 
 /**
  * Created by Taras on 09/02/2017.
@@ -57,26 +59,25 @@ public class UtilsApi {
         return res;
     }
 
-    public static ArrayList<ChannelModel> jsonToChannelLst(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, new TypeToken<ArrayList<ChannelModel>>(){}.getType());
+    public static ArrayList<ProgramItemModel> cursorToProgram(Cursor cursor) throws JSONException {
+        cursor.moveToFirst();
+        int jsonCol;
+        jsonCol = cursor.getColumnIndex(JSON_PROGRAM_KEY);
+        String json;
+        json = cursor.getString(jsonCol);
+        return jsonToProgram(json);
     }
 
-    public static ArrayList<CategoryModel> jsonToCategoryList(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, new TypeToken<ArrayList<CategoryModel>>(){}.getType());
-    }
+    public static ArrayList<ProgramItemModel> jsonToProgram(String jsonString) throws JSONException {
+        JSONArray jsonArray = new JSONArray(jsonString);
+        ArrayList<ProgramItemModel> res = new ArrayList<>();
 
-    public static String inputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder builder = new StringBuilder();
-        String line;
-
-        while ((line = reader.readLine()) != null) {
-            builder.append(line).append("\n");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            res.add(new ProgramItemModel(jsonObject));
         }
 
-        return builder.toString();
+        return res;
     }
 
     public static String intToString(int n, int len) {
@@ -87,5 +88,20 @@ public class UtilsApi {
         }
 
         return s;
+    }
+
+    public static String parseDate(Uri contentUri) {
+        String s = contentUri.toString(), res = "";
+        int i = s.length();
+
+        while (s.charAt(i - 1) != '/') {
+            i--;
+        }
+
+        for (; i < s.length(); i++) {
+            res += s.charAt(i);
+        }
+
+        return res;
     }
 }

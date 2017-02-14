@@ -24,7 +24,6 @@ public class ChannelModel {
     private String pictureUrl;
     @SerializedName("category_id")
     private int categoryId;
-    private int isFave;
 
     public ContentValues toContentValues() {
         ContentValues contentValues = new ContentValues();

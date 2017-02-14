@@ -11,18 +11,10 @@
         android:layout_width="100dp"
         android:layout_height="50dp" />
 
-    <ImageButton
-        android:id="@+id/im_fave_PRL"
-        android:layout_alignParentRight="true"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        tools:ignore="RtlHardcoded" />
-
     <TextView
         android:id="@+id/tv_title_PRL"
         android:gravity="center"
         android:layout_toRightOf="@id/tv_time_PRL"
-        android:layout_toLeftOf="@id/im_fave_PRL"
         tools:text="title"
         android:layout_width="match_parent"
         android:layout_height="50dp"

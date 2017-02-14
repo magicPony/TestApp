@@ -1,7 +1,5 @@
 package com.example.taras.testapp;
 
-import android.net.Uri;
-
 /**
  * Created by Taras on 10/02/2017.
  */
@@ -20,27 +18,11 @@ public class ApiConst {
     public static final String CHANNEL_ID_KEY = "channel_id";
     public static final String TIMESTAMP_KEY = "timestamp";
     public static final String JSON_PROGRAM_KEY = "json_program";
-    public static final String DAYS_TO_LOAD = "days_to_load";
+    public static final String DAYS_TO_LOAD_KEY = "days_to_load";
+    // prefs keys
+    public static final String CATEGORIES_LOAD_STATUS_KEY = "category_load_status";
+    public static final String CHANNELS_LOAD_STATUS_KEY = "channels_load_status";
+    public static final String PROGRAM_LOAD_STATUS_KEY = "program_load_status";
 
-    public static final String CATEGORY_CLASS = "category";
-    public static final String CHANNEL_CLASS = "channel";
-    public static final String AUTHORITY = "my_authority";
-    public static final String CATEGORIES_PATH = "categories_path";
-    public static final String CHANNELS_PATH = "channels_path";
-    public static final String CATEGORIES_TABLE = "category_list";
-    public static final String CHANNELS_TABLE = "channel_list";
-    public static final String CATEGORIES_LINK = "http://52.50.138.211:8080/ChanelAPI/categories";
-    public static final String CHANNELS_LINK = "http://52.50.138.211:8080/ChanelAPI/chanels";
-
-    public static final Uri CATEGORIES_URI = Uri.parse("content://" + AUTHORITY + "/" + CATEGORIES_PATH);
-    public static final Uri CHANNELS_URI   = Uri.parse("content://" + AUTHORITY + "/" + CHANNELS_PATH);
-
-    // service constants
-    public static final int COMMAND_RESET_ALARM_KEY = 102;
-    public static final int COMMAND_CANCEL_ALARM = 101;
-    public static final int COMMAND_NO_ACTION = 103;
-    public static final int COMMAND_UPDATE_CATEGORIES = 104;
-    public static final int COMMAND_UPDATE_CHANNELS = 105;
-    public static final int COMMAND_UPDATE_PROGRAM = 106;
     public static final String COMMAND_KEY = "command";
 }

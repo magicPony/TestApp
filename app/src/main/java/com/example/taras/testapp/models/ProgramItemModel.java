@@ -112,4 +112,12 @@ public class ProgramItemModel {
     public int compareTo(ProgramItemModel programItem) {
         return time.compareTo(programItem.getTime());
     }
+
+    public ProgramItemModel(JSONObject jsonObject) throws JSONException {
+        setChannelId(jsonObject.getInt(CHANNEL_ID_KEY));
+        setTitle(jsonObject.getString(TITLE_KEY));
+        setDate(jsonObject.getString(DATE_KEY));
+        setDescription(jsonObject.getString(DESCRIPTION_KEY));
+        setTime(jsonObject.getString(TIME_KEY));
+    }
 }

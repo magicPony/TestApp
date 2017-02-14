@@ -19,6 +19,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramViewHolder> {
     private ArrayList<ProgramItemModel> mProgram;
 
     public ProgramAdapter(ArrayList<ProgramItemModel> program) {
+        super();
         mProgram = program;
     }
 
