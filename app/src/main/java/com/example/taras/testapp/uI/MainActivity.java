@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.taras.testapp.PrefsApi;
 import com.example.taras.testapp.R;
 import com.example.taras.testapp.dataStoreApi.ProgramsEntry;
 import com.example.taras.testapp.dataStoreApi.TmpDataController;
@@ -15,6 +16,7 @@ import com.example.taras.testapp.models.ProgramItemModel;
 
 import org.json.JSONException;
 
+import static com.example.taras.testapp.ApiConst.NECESSARY_DATA_STATUS_KEY;
 import static com.example.taras.testapp.UtilsApi.cursorToProgram;
 import static com.example.taras.testapp.UtilsApi.getDate;
 
@@ -30,7 +32,10 @@ public class MainActivity extends AppCompatActivity {
                 initUI();
             }
         });
-        TmpDataController.initData();
+
+        if (PrefsApi.getInt(this, NECESSARY_DATA_STATUS_KEY, 0) == 1) {
+            TmpDataController.initData();
+        }
         //TmpDataController.updateData();
         /*try {
             checkProgram();

@@ -47,7 +47,6 @@ public class AsyncGetProgram extends AsyncTask<Void, Void, Map<String, ArrayList
             Uri contentUri = ProgramsEntry.CONTENT_URI.buildUpon().appendPath(date).build();
             Log.d("debug_uri", contentUri.toString());
             Cursor cursor = mContext.getContentResolver().query(contentUri, null, null, null, null);
-
             try {
                 programs.put(date, cursorToProgram(cursor));
             } catch (JSONException e) {

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.taras.testapp.PrefsApi;
 import com.example.taras.testapp.asyncDbRequest.AsyncGetCategories;
 import com.example.taras.testapp.asyncDbRequest.AsyncGetChannels;
 import com.example.taras.testapp.asyncDbRequest.AsyncGetProgram;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.example.taras.testapp.ApiConst.NECESSARY_DATA_STATUS_KEY;
 
 /**
  * Created by Taras on 13/02/2017.
@@ -60,6 +63,7 @@ public class TmpDataController {
             }
 
             resetDataLoadStatus();
+            PrefsApi.putInt(mContext, NECESSARY_DATA_STATUS_KEY, 1);
         }
     }
 

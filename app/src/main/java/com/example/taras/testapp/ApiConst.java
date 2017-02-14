@@ -23,6 +23,7 @@ public class ApiConst {
     public static final String CATEGORIES_LOAD_STATUS_KEY = "category_load_status";
     public static final String CHANNELS_LOAD_STATUS_KEY = "channels_load_status";
     public static final String PROGRAM_LOAD_STATUS_KEY = "program_load_status";
+    public static final String NECESSARY_DATA_STATUS_KEY = "necessary";
 
     public static final String COMMAND_KEY = "command";
 }
