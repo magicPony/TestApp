@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.taras.testapp.PrefsApi;
 import com.example.taras.testapp.asyncDbRequest.AsyncGetCategories;
 import com.example.taras.testapp.asyncDbRequest.AsyncGetChannels;
 import com.example.taras.testapp.asyncDbRequest.AsyncGetProgram;

@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.taras.testapp.PrefsApi;
+import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.R;
 import com.example.taras.testapp.models.ProgramItemModel;
 import com.example.taras.testapp.uI.recyclerViewModules.ProgramAdapter;

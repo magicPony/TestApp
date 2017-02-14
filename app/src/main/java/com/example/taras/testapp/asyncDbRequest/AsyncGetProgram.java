@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.taras.testapp.PrefsApi;
+import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.dataStoreApi.ProgramsEntry;
 import com.example.taras.testapp.dataStoreApi.TmpDataController;
 import com.example.taras.testapp.models.ProgramItemModel;

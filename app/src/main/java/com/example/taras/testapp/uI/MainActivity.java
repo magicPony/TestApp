@@ -1,24 +1,18 @@
 package com.example.taras.testapp.uI;
 
-import android.database.Cursor;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import com.example.taras.testapp.PrefsApi;
+import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.R;
-import com.example.taras.testapp.dataStoreApi.ProgramsEntry;
 import com.example.taras.testapp.dataStoreApi.TmpDataController;
-import com.example.taras.testapp.models.ProgramItemModel;
-
-import org.json.JSONException;
 
 import static com.example.taras.testapp.ApiConst.NECESSARY_DATA_STATUS_KEY;
-import static com.example.taras.testapp.UtilsApi.cursorToProgram;
-import static com.example.taras.testapp.UtilsApi.getDate;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -36,21 +30,6 @@ public class MainActivity extends AppCompatActivity {
         if (PrefsApi.getInt(this, NECESSARY_DATA_STATUS_KEY, 0) == 1) {
             TmpDataController.initData();
         }
-        //TmpDataController.updateData();
-        /*try {
-            checkProgram();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-    }
-
-    private void checkProgram() throws JSONException {
-        Uri contentUri = ProgramsEntry.CONTENT_URI.buildUpon().appendPath(getDate(0)).build();
-        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
-
-        for (ProgramItemModel programItem : cursorToProgram(cursor)) {
-            Log.d("ama_hasla", "time=" + programItem.getTime() + " title=" + programItem.getTitle());
-        }
     }
 
     private void initUI() {
@@ -62,5 +41,18 @@ public class MainActivity extends AppCompatActivity {
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+        return true;
     }
 }

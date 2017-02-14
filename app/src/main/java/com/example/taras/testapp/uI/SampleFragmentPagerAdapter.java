@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.taras.testapp.PrefsApi;
+import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.UtilsApi;
 import com.example.taras.testapp.dataStoreApi.TmpDataController;
 import com.example.taras.testapp.models.ChannelModel;

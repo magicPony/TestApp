@@ -21,19 +21,22 @@
         </activity>
 
         <provider
-            android:authorities="my_authority"
             android:name=".dataStoreApi.ContentProviderTV"
+            android:authorities="my_authority"
             android:enabled="true"
+            android:exported="true"
             android:protectionLevel="signature"
-            android:syncable="true"
-            android:exported="true"/>
+            android:syncable="true" />
 
-        <receiver android:name=".serviceModules.SyncScheduler"
-            android:process=":remote"/>
+        <receiver
+            android:name=".serviceModules.SyncScheduler"
+            android:process=":remote" />
 
-        <service android:name=".serviceModules.DataHandleService"
-            android:exported="false"/>
+        <service
+            android:name=".serviceModules.DataHandleService"
+            android:exported="false" />
 
+        <activity android:name=".uI.SettingsActivity"></activity>
     </application>
 
 </manifest>

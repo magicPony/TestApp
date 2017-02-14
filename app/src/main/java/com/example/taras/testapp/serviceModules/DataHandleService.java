@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.taras.testapp.PrefsApi;
+import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.UtilsApi;
 import com.example.taras.testapp.dataStoreApi.CategoryEntry;
 import com.example.taras.testapp.dataStoreApi.ChannelEntry;
