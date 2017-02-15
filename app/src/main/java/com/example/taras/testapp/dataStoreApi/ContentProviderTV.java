@@ -151,7 +151,7 @@ public class ContentProviderTV extends ContentProvider {
                 cursor = db.query(
                         ProgramsEntry.TABLE_NAME,
                         projection,
-                        //ProgramsEntry._ID + " = ?",   TODO : check right string
+                        //ProgramsEntry._ID + " = ?",
                         TIMESTAMP_KEY + " = ?",
                         new String[]{date},
                         null,

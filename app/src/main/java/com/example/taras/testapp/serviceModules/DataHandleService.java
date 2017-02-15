@@ -79,7 +79,6 @@ public class DataHandleService extends IntentService {
     }
 
     private void updateProgram(final String date, final boolean isLastDay, final int position) {
-        Log.d("update_data", "updateProgram");
         IProgramRequest programRequest = new ProgramRequestImpl();
         Call<List<ProgramItemModel>> requestRes = programRequest.getProgramList(date);
 
@@ -106,7 +105,7 @@ public class DataHandleService extends IntentService {
                     getContentResolver().bulkInsert(ProgramsEntry.CONTENT_URI, contentValues);
                     TmpDataController.notifyProgramLoaded();
                 }
-                //getContentResolver().insert(ProgramsEntry.CONTENT_URI, contentValues);
+                Log.d("update_data", "updateProgram day=" + Integer.toString(position));
             }
 
             @Override
@@ -164,6 +163,7 @@ public class DataHandleService extends IntentService {
                     TmpDataController.updateCategories(response.body());
                     TmpDataController.notifyCategoriesLoaded();
                     getContentResolver().delete(CategoryEntry.CONTENT_URI, null, null);
+
 
                     for (CategoryModel category : response.body()) {
                         getContentResolver().insert(CategoryEntry.CONTENT_URI, category.toContentValues());

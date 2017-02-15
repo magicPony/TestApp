@@ -23,7 +23,6 @@ public class SyncScheduler extends BroadcastReceiver {
 
     private void startServiceCommand(Context context) {
         Intent intent = new Intent(context, DataHandleService.class);
-        intent.putExtra("taras", "taras");
         context.startService(intent);
     }
 
@@ -31,6 +30,7 @@ public class SyncScheduler extends BroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, SyncScheduler.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        intent.putExtra("taras", "taras");
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 30, pendingIntent); // TODO : increase time interval
     }
 
