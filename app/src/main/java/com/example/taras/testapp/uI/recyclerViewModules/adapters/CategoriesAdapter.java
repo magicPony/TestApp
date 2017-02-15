@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.taras.testapp.R;
 import com.example.taras.testapp.models.CategoryModel;
-import com.example.taras.testapp.uI.ChannelsActivity;
+import com.example.taras.testapp.uI.activities.ChannelsActivity;
 import com.example.taras.testapp.uI.recyclerViewModules.viewHolders.CategoryViewHolder;
 
 import java.util.ArrayList;

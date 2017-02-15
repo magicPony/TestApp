@@ -1,4 +1,4 @@
-package com.example.taras.testapp.uI;
+package com.example.taras.testapp.uI.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

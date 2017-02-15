@@ -1,4 +1,4 @@
-package com.example.taras.testapp.uI;
+package com.example.taras.testapp.uI.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,20 +9,21 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.taras.testapp.R;
 import com.example.taras.testapp.dataStoreApi.TmpDataController;
-import com.example.taras.testapp.uI.recyclerViewModules.adapters.CategoriesAdapter;
+import com.example.taras.testapp.uI.recyclerViewModules.adapters.ChannelsAdapter;
 
 /**
  * Created by Taras on 15/02/2017.
  */
 
-public class CategoriesActivity extends AppCompatActivity {
+public class FavesActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
+        setContentView(R.layout.activity_faves);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_ACat);
-        CategoriesAdapter adapter = new CategoriesAdapter(this, TmpDataController.getCategories());
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_AF);
+        ChannelsAdapter adapter = new ChannelsAdapter(this, TmpDataController.getFaveChannels());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);

@@ -1,4 +1,4 @@
-package com.example.taras.testapp.uI;
+package com.example.taras.testapp.uI.activities;
 
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import com.example.taras.testapp.R;
 import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.dataStoreApi.TmpDataController;
+import com.example.taras.testapp.uI.IOnDataLoadedCallback;
+import com.example.taras.testapp.uI.SampleFragmentPagerAdapter;
 
 import static com.example.taras.testapp.ApiConst.NECESSARY_DATA_STATUS_KEY;
 

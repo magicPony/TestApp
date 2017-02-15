@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.taras.testapp.uI.MainActivity"
+    tools:context="com.example.taras.testapp.uI.activities.MainActivity"
     android:orientation="vertical">
 
     <android.support.design.widget.TabLayout

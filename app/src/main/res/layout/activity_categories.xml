@@ -4,7 +4,7 @@
     android:id="@+id/activity_categories"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.taras.testapp.uI.CategoriesActivity">
+    tools:context="com.example.taras.testapp.uI.activities.CategoriesActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_ACat"
