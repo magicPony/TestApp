@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".uI.SettingsActivity"/>
+
         <provider
             android:name=".dataStoreApi.ContentProviderTV"
             android:authorities="my_authority"

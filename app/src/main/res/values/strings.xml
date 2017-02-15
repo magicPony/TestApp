@@ -9,4 +9,7 @@
     <string name="fave_channels">Favorite channels</string>
     <string name="category_list">Category list</string>
     <string name="channel_list">Channel list</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

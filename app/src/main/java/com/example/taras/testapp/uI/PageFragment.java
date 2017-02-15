@@ -1,4 +1,4 @@
-package com.example.taras.testapp.uI.fragments;
+package com.example.taras.testapp.uI;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
