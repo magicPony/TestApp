@@ -22,6 +22,8 @@
 
         <activity android:name=".uI.SettingsActivity"/>
 
+        <activity android:name=".uI.CategoriesActivity"/>
+
         <provider
             android:name=".dataStoreApi.ContentProviderTV"
             android:authorities="my_authority"

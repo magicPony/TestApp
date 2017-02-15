@@ -36,7 +36,7 @@ public class TmpDataController {
         isCategoriesLoaded = isChannelsLoaded = isProgramLoaded = false;
     }
 
-    private static boolean getDataLoadStatus() {
+    public static boolean isDataLoaded() {
         return isCategoriesLoaded && isChannelsLoaded && isProgramLoaded;
     }
 
@@ -56,7 +56,7 @@ public class TmpDataController {
     }
 
     private static void performUpdate() {
-        if (getDataLoadStatus()) {
+        if (isDataLoaded()) {
             if (mContext != null && mCallback != null) {
                 mCallback.onFinish();
             }

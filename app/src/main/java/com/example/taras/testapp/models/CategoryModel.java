@@ -37,7 +37,7 @@ public class CategoryModel {
 
         id = cursor.getInt(idCol);
         title = cursor.getString(titleCol);
-        title = "asd";
+        title = cursor.getString(titleCol);
         pictureUrl = cursor.getString(picCol);
     }
 

@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.mi_categories :
+                intent = new Intent(this, CategoriesActivity.class);
                 break;
 
             case R.id.mi_channels :
@@ -71,7 +72,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        startActivity(intent);
+        if (intent != null) {
+            startActivity(intent);
+        }
+
         return true;
     }
 }

@@ -12,7 +12,7 @@ import com.example.taras.testapp.R;
 
 public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView tvTitle;
+    public TextView tvTitle;
 
     public CategoryViewHolder(View itemView) {
         super(itemView);
