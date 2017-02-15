@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.mi_faves :
+                intent = new Intent(this, FavesActivity.class);
                 break;
 
             case R.id.mi_settings :

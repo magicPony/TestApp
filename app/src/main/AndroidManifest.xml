@@ -21,10 +21,9 @@
         </activity>
 
         <activity android:name=".uI.SettingsActivity"/>
-
         <activity android:name=".uI.CategoriesActivity"/>
-
         <activity android:name=".uI.ChannelsActivity"/>
+        <activity android:name=".uI.FavesActivity"/>
 
         <provider
             android:name=".dataStoreApi.ContentProviderTV"

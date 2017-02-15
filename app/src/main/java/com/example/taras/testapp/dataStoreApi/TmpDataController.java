@@ -164,4 +164,18 @@ public class TmpDataController {
         Intent intent = new Intent(mContext, DataHandleService.class);
         mContext.startService(intent);
     }
+
+    public static ArrayList<ChannelModel> getFaveChannels() {
+        ArrayList<ChannelModel> res = new ArrayList<>();
+
+        for (ChannelModel channel : mChannels) {
+            int channelId = channel.getId();
+
+            if (PrefsApi.getInt(mContext, Integer.toString(channelId), 0) == 1) {
+                res.add(channel);
+            }
+        }
+
+        return res;
+    }
 }
