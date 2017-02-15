@@ -24,6 +24,8 @@
 
         <activity android:name=".uI.CategoriesActivity"/>
 
+        <activity android:name=".uI.ChannelsActivity"/>
+
         <provider
             android:name=".dataStoreApi.ContentProviderTV"
             android:authorities="my_authority"

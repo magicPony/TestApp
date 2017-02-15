@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.mi_channels :
+                intent = new Intent(this, ChannelsActivity.class);
                 break;
 
             case R.id.mi_faves :
