@@ -23,7 +23,7 @@ public class FavesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_faves);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_AF);
-        ChannelsAdapter adapter = new ChannelsAdapter(TmpDataController.getFaveChannels());
+        ChannelsAdapter adapter = new ChannelsAdapter(this, TmpDataController.getFaveChannels());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);

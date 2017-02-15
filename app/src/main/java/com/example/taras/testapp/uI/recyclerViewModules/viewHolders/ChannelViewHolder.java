@@ -13,6 +13,15 @@ import com.example.taras.testapp.R;
 public class ChannelViewHolder extends RecyclerView.ViewHolder {
 
     public TextView tvName;
+    private int mChannelId;
+
+    public void setChannelId(int id) {
+        mChannelId = id;
+    }
+
+    public int getChannelId() {
+        return mChannelId;
+    }
 
     public ChannelViewHolder(View itemView) {
         super(itemView);

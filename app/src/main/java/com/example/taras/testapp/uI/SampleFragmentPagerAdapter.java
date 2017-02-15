@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.UtilsApi;
+import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.dataStoreApi.TmpDataController;
 import com.example.taras.testapp.models.ChannelModel;
 import com.example.taras.testapp.models.ProgramItemModel;
@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.taras.testapp.ApiConst.DAYS_TO_LOAD_KEY;
+import static com.example.taras.testapp.ApiConst.ONLY_FAVE_KEY;
 
 /**
  * Created by Taras on 12/02/2017.
@@ -64,8 +65,15 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
         mChannelIds = new ArrayList<>();
         mPrograms = new ArrayList<>();
         Map<Integer, Integer> channelEntryById = new HashMap<>();
+        boolean onlyFave = PrefsApi.getInt(mContext, ONLY_FAVE_KEY, 0) == 1;
 
         for (ChannelModel channel : TmpDataController.getChannels()) {
+            int channelId = channel.getId();
+
+            if (onlyFave && PrefsApi.getInt(mContext, Integer.toString(channelId), 0) == 0) {
+                continue;
+            }
+
             mTabTitles.add(channel.getName());
             mChannelIds.add(channel.getId());
             mPrograms.add(new ArrayList<ProgramItemModel>());

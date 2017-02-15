@@ -13,6 +13,15 @@ import com.example.taras.testapp.R;
 public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
     public TextView tvTitle;
+    private int mCategoryId;
+
+    public void setCategoryId(int id) {
+        mCategoryId = id;
+    }
+
+    public int getCategoryId() {
+        return mCategoryId;
+    }
 
     public CategoryViewHolder(View itemView) {
         super(itemView);

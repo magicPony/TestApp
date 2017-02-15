@@ -53,4 +53,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
+    <CheckBox
+        android:id="@+id/cb_only_fave_AS"
+        android:text="Load only preferred channels"
+        android:layout_below="@id/btn_thirty_AS"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

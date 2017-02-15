@@ -22,7 +22,7 @@ public class CategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categories);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_ACat);
-        CategoriesAdapter adapter = new CategoriesAdapter(TmpDataController.getCategories());
+        CategoriesAdapter adapter = new CategoriesAdapter(this, TmpDataController.getCategories());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
