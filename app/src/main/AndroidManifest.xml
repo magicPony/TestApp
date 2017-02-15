@@ -35,8 +35,6 @@
         <service
             android:name=".serviceModules.DataHandleService"
             android:exported="false" />
-
-        <activity android:name=".uI.SettingsActivity"></activity>
     </application>
 
 </manifest>

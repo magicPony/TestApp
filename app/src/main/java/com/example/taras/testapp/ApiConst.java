@@ -25,5 +25,8 @@ public class ApiConst {
     public static final String PROGRAM_LOAD_STATUS_KEY = "program_load_status";
     public static final String NECESSARY_DATA_STATUS_KEY = "necessary";
 
+    // fragment names
+    public static final String SETTINGS_FRAGMENT_NAME = "settings_fragment";
+
     public static final String COMMAND_KEY = "command";
 }

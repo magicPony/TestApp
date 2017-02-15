@@ -6,4 +6,7 @@
     <string name="one_day">1 day</string>
     <string name="seven_days">7 days</string>
     <string name="thirty_days">30 days</string>
+    <string name="fave_channels">Favorite channels</string>
+    <string name="category_list">Category list</string>
+    <string name="channel_list">Channel list</string>
 </resources>

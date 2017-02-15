@@ -1,4 +1,4 @@
-package com.example.taras.testapp.uI.recyclerViewModules;
+package com.example.taras.testapp.uI.recyclerViewModules.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.taras.testapp.R;
 import com.example.taras.testapp.models.ProgramItemModel;
+import com.example.taras.testapp.uI.recyclerViewModules.viewHolders.ProgramViewHolder;
 
 import java.util.ArrayList;
 

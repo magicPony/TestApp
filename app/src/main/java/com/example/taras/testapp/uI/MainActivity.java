@@ -1,18 +1,21 @@
 package com.example.taras.testapp.uI;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.R;
+import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.dataStoreApi.TmpDataController;
+import com.example.taras.testapp.uI.fragments.SettingsFragment;
 
 import static com.example.taras.testapp.ApiConst.NECESSARY_DATA_STATUS_KEY;
+import static com.example.taras.testapp.ApiConst.SETTINGS_FRAGMENT_NAME;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -51,8 +54,37 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
+        Fragment fragment = null;
+        String tag = "";
+
+        switch (item.getItemId()) {
+            case R.id.mi_categories :
+                break;
+
+            case R.id.mi_channels :
+                break;
+
+            case R.id.mi_faves :
+                break;
+
+            case R.id.mi_settings :
+                tag = SETTINGS_FRAGMENT_NAME;
+                fragment = new SettingsFragment(this);
+                break;
+
+            case R.id.mi_day_program :
+                break;
+        }
+
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.activity_main, fragment, tag)
+                    .addToBackStack(tag)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
+        }
+
         return true;
     }
 }

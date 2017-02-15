@@ -3,4 +3,20 @@
     <item
         android:id="@+id/mi_settings"
         android:title="@string/settings" />
+
+    <item
+        android:title="@string/category_list"
+        android:id="@+id/mi_categories" />
+
+    <item
+        android:title="@string/channel_list"
+        android:id="@+id/mi_channels" />
+
+    <item
+        android:title="@string/fave_channels"
+        android:id="@+id/mi_faves" />
+
+    <item
+        android:id="@+id/mi_day_program"
+        android:title="Program for a day" />
 </menu>

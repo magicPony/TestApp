@@ -1,4 +1,4 @@
-package com.example.taras.testapp.uI;
+package com.example.taras.testapp.uI.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.R;
 import com.example.taras.testapp.models.ProgramItemModel;
-import com.example.taras.testapp.uI.recyclerViewModules.ProgramAdapter;
+import com.example.taras.testapp.uI.recyclerViewModules.adapters.ProgramAdapter;
 
 import java.util.ArrayList;
 
