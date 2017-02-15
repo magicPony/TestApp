@@ -213,10 +213,14 @@ public class TmpDataController {
     }
 
     public static void setNotificationManager(NotificationManager notificationManager) {
-        TmpDataController.mNotificationManager = notificationManager;
+        mNotificationManager = notificationManager;
     }
 
     public static void sendDataLoadedNotification() {
+        if (mNotificationManager == null) {
+            return;
+        }
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext)
                 .setSmallIcon(R.drawable.notification_icon)
                 .setContentTitle("Test App")
