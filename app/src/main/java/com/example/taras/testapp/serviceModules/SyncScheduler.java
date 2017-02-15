@@ -23,6 +23,7 @@ public class SyncScheduler extends BroadcastReceiver {
 
     private void startServiceCommand(Context context) {
         Intent intent = new Intent(context, DataHandleService.class);
+        intent.putExtra("taras", "taras");
         context.startService(intent);
     }
 

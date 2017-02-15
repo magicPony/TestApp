@@ -6,10 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.UtilsApi;
 import com.example.taras.testapp.dataStoreApi.CategoryEntry;
 import com.example.taras.testapp.dataStoreApi.ChannelEntry;
+import com.example.taras.testapp.dataStoreApi.PrefsApi;
 import com.example.taras.testapp.dataStoreApi.ProgramsEntry;
 import com.example.taras.testapp.dataStoreApi.TmpDataController;
 import com.example.taras.testapp.models.CategoryModel;
@@ -59,18 +59,26 @@ public class DataHandleService extends IntentService {
         startAlarm();
     }
 
+    private ContentValues[] contentValues;
+
     @Override
     protected void onHandleIntent(Intent intent) {
+        if (!intent.hasExtra("taras")) {
+            return;
+        }
+
+        Log.d("service_debug", "taras");
         updateCategories();
         updateChannels();
         int daysCount = PrefsApi.getInt(mContext, DAYS_TO_LOAD_KEY, 1);
+        contentValues = new ContentValues[daysCount];
 
         for (int i = 0; i < daysCount; i++) {
-            updateProgram(UtilsApi.getDate(i), i == daysCount - 1);
+            updateProgram(UtilsApi.getDate(i), i == daysCount - 1, i);
         }
     }
 
-    private void updateProgram(final String date, final boolean sendNotification) {
+    private void updateProgram(final String date, final boolean isLastDay, final int position) {
         Log.d("update_data", "updateProgram");
         IProgramRequest programRequest = new ProgramRequestImpl();
         Call<List<ProgramItemModel>> requestRes = programRequest.getProgramList(date);
@@ -79,10 +87,6 @@ public class DataHandleService extends IntentService {
             @Override
             public void onResponse(Call<List<ProgramItemModel>> call, Response<List<ProgramItemModel>> response) {
                 TmpDataController.updateProgram(response.body(), date);
-
-                if (sendNotification) {
-                    TmpDataController.notifyProgramLoaded();
-                }
 
                 JSONArray jsonArray = new JSONArray();
 
@@ -93,11 +97,16 @@ public class DataHandleService extends IntentService {
                         e.printStackTrace();
                     }
 
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(JSON_PROGRAM_KEY, jsonArray.toString());
-                contentValues.put(TIMESTAMP_KEY, date);
-                getContentResolver().insert(ProgramsEntry.CONTENT_URI, contentValues);
-                Log.d("update_data", "program updated");
+                ContentValues contentValuesProgram = new ContentValues();
+                contentValuesProgram.put(JSON_PROGRAM_KEY, jsonArray.toString());
+                contentValuesProgram.put(TIMESTAMP_KEY, date);
+                contentValues[position] = contentValuesProgram;
+
+                if (isLastDay) {
+                    getContentResolver().bulkInsert(ProgramsEntry.CONTENT_URI, contentValues);
+                    TmpDataController.notifyProgramLoaded();
+                }
+                //getContentResolver().insert(ProgramsEntry.CONTENT_URI, contentValues);
             }
 
             @Override
@@ -123,8 +132,6 @@ public class DataHandleService extends IntentService {
                     for (ChannelModel channel : response.body()) {
                         getContentResolver().insert(ChannelEntry.CONTENT_URI, channel.toContentValues());
                     }
-
-                    Log.d("update_data", "channels updated");
                 }
             }
 
@@ -161,8 +168,6 @@ public class DataHandleService extends IntentService {
                     for (CategoryModel category : response.body()) {
                         getContentResolver().insert(CategoryEntry.CONTENT_URI, category.toContentValues());
                     }
-
-                    Log.d("update_data", "categories updated");
                 }
             }
 

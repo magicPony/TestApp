@@ -194,6 +194,7 @@ public class TmpDataController {
     public static void updateData() {
         resetDataLoadStatus();
         Intent intent = new Intent(mContext, DataHandleService.class);
+        intent.putExtra("taras", "taras");
         mContext.startService(intent);
     }
 
