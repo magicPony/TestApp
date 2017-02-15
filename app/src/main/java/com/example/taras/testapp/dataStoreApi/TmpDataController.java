@@ -14,6 +14,8 @@ import com.example.taras.testapp.serviceModules.DataHandleService;
 import com.example.taras.testapp.uI.IOnDataLoadedCallback;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,8 +84,25 @@ public class TmpDataController {
         }
 
         mChannels = new ArrayList<>();
+        ArrayList<ChannelModel> fave, unfave;
+        fave = new ArrayList<>();
+        unfave = new ArrayList<>();
 
         for (ChannelModel channel : channels) {
+            int channelId = channel.getId();
+
+            if (PrefsApi.getInt(mContext, Integer.toString(channelId), 0) == 0) {
+                unfave.add(channel);
+            } else {
+                fave.add(channel);
+            }
+        }
+
+        for (ChannelModel channel : fave) {
+            mChannels.add(channel);
+        }
+
+        for (ChannelModel channel : unfave) {
             mChannels.add(channel);
         }
     }
@@ -104,6 +123,13 @@ public class TmpDataController {
         if (mContext == null) {
             return;
         }
+
+        Collections.sort(program, new Comparator<ProgramItemModel>() {
+            @Override
+            public int compare(ProgramItemModel lhs, ProgramItemModel rhs) {
+                return lhs.compareTo(rhs);
+            }
+        });
 
         ArrayList<ProgramItemModel> tmp = new ArrayList<>();
 
