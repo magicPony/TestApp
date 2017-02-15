@@ -1,9 +1,12 @@
 package com.example.taras.testapp.dataStoreApi;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 
+import com.example.taras.testapp.R;
 import com.example.taras.testapp.asyncDbRequest.AsyncGetCategories;
 import com.example.taras.testapp.asyncDbRequest.AsyncGetChannels;
 import com.example.taras.testapp.asyncDbRequest.AsyncGetProgram;
@@ -33,6 +36,7 @@ public class TmpDataController {
     private static ArrayList<CategoryModel> mCategories;
     private static Map<String, ArrayList<ProgramItemModel>> mPrograms;
     private static IOnDataLoadedCallback mCallback;
+    private static NotificationManager mNotificationManager;
 
     public static void resetDataLoadStatus() {
         isCategoriesLoaded = isChannelsLoaded = isProgramLoaded = false;
@@ -59,10 +63,12 @@ public class TmpDataController {
 
     private static void performUpdate() {
         if (isDataLoaded()) {
-            if (mContext != null && mCallback != null) {
-                mCallback.onFinish();
+            if (mCallback == null || mContext == null) {
+                return;
             }
 
+            mCallback.onFinish();
+            sendDataLoadedNotification();
             resetDataLoadStatus();
             PrefsApi.putInt(mContext, NECESSARY_DATA_STATUS_KEY, 1);
         }
@@ -203,5 +209,18 @@ public class TmpDataController {
         }
 
         return res;
+    }
+
+    public static void setNotificationManager(NotificationManager notificationManager) {
+        TmpDataController.mNotificationManager = notificationManager;
+    }
+
+    public static void sendDataLoadedNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setContentTitle("Test App")
+                .setContentText("data is loaded successfully");
+
+        mNotificationManager.notify(0, builder.build());
     }
 }
